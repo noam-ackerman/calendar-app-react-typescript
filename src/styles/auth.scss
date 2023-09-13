@@ -1,0 +1,71 @@
+@import "./mixins.scss";
+@import "./variables.scss";
+@import "./generalSelectors.scss";
+
+.authWrapper {
+  width: min(420px, 90%);
+  margin: 5% auto;
+  text-align: center;
+
+  .authButtons {
+    @include flexRow($gap: 0, $direction: center);
+
+    a {
+      width: 50%;
+      padding: 0.8rem;
+      display: block;
+      background-color: $lighterPink-color;
+      text-decoration: none;
+      color: $blue-color;
+      font-family: "Lora", serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+    }
+    a.active {
+      background-color: $pink-color;
+    }
+  }
+  .formCard {
+    background-color: $pink-color;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    padding: 3rem 2.5rem;
+    font-family: "Roboto", sans-serif;
+    box-shadow: $box-shadow-no-top;
+  }
+  form {
+    .error-message {
+      @include messegeTheme($theme: $lightRed-color);
+    }
+    @include flexColumn($gap: 1.2rem, $direction: flex-start);
+    .input-group {
+      width: 100%;
+      @include flexColumn($gap: 0.5rem, $direction: flex-start);
+      label {
+        color: $blue-color;
+      }
+      input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.8rem;
+        border-radius: $border-radius;
+        border: none;
+        box-shadow: $box-shadow;
+      }
+    }
+    button {
+      @extend %submit-button;
+      align-self: center;
+      margin-top: 1rem;
+    }
+    a {
+      color: #fff;
+      margin-top: 0.5rem;
+      text-align: center;
+      display: block;
+      width: 100%;
+    }
+  }
+}

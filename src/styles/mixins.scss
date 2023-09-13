@@ -1,0 +1,27 @@
+@import "./variables.scss";
+
+@mixin flexRow($gap: 1rem, $direction: center) {
+  display: flex;
+  align-items: center;
+  justify-content: $direction;
+  gap: $gap;
+}
+
+@mixin flexColumn($gap: 1rem, $direction: center) {
+  display: flex;
+  flex-direction: column;
+  align-items: $direction;
+  justify-content: center;
+  gap: $gap;
+}
+
+@mixin messegeTheme($theme) {
+  background-color: $theme;
+  font-family: "Roboto", sans-serif;
+  width: 100%;
+  padding: 1rem;
+  border-radius: $border-radius;
+  box-sizing: border-box;
+  font-size: 0.9rem;
+  color: #fff;
+}
