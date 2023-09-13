@@ -11,6 +11,12 @@ interface Props {
 export default function FormCard({ formType }: Props): JSX.Element {
   return (
     <div className="authWrapper">
+      <div className="authTitle">
+        <span className="material-symbols-outlined calendar-icon">
+          calendar_month
+        </span>
+        <span className="text">~ My Calendar</span>
+      </div>
       <div className="authButtons">
         <Link
           to="/login"
@@ -23,14 +29,14 @@ export default function FormCard({ formType }: Props): JSX.Element {
               : ""
           }`}
         >
-          Login
+          Login ♡
         </Link>
         <Link
           to="/signup"
           title="signup"
           className={`signup ${formType === "signup" ? "active" : ""}`}
         >
-          Signup
+          Signup ♡
         </Link>
       </div>
       <div className="formCard">

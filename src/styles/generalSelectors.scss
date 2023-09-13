@@ -4,7 +4,7 @@
   background-color: $lightBlue-color;
   border: 2px solid $blue-color;
   box-shadow: $box-shadow;
-  font-family: "Lora", serif;
+  font-family: "Space Mono", monospace;
   color: $blue-color;
   font-weight: 700;
   cursor: pointer;
@@ -12,6 +12,7 @@
   font-size: 1.1rem;
   border-radius: $border-radius;
   transition: $transition;
+  cursor: $pointer-cursor;
   &:hover {
     background-color: $lighterBlue-color;
   }

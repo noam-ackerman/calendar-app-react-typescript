@@ -1,3 +1,4 @@
+/*colors*/
 $lilac-color: #cfc0ff;
 $blue-color: #3a86ff;
 $lightBlue-color: #9cc2ff;
@@ -6,8 +7,12 @@ $pink-color: #ffc5e8;
 $lighterPink-color: #ffddf2;
 $orange-color: #fdcfb9;
 $lightRed-color: #ff8888;
-$transition: all 200ms ease;
 
+/*cursors*/
+$default-cursor: url(https://cur.cursors-4u.net/nature/nat-10/nat991.cur), auto;
+$pointer-cursor: url(https://cur.cursors-4u.net/nature/nat-10/nat997.cur), auto;
+
+$transition: all 200ms ease;
 $border-radius: 8px;
 $box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 $box-shadow-no-top: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
