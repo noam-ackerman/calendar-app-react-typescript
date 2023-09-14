@@ -15,6 +15,22 @@
   gap: $gap;
 }
 
+@mixin primaryButton($color, $background, $hoverBackground) {
+  background-color: $background;
+  border: 2px solid $color;
+  box-shadow: $box-shadow;
+  font-family: "Space Mono", monospace;
+  color: $color;
+  font-weight: 700;
+  padding: 0.5rem 1.3rem;
+  font-size: 1.1rem;
+  border-radius: $border-radius;
+  transition: $transition;
+  &:hover {
+    background-color: $hoverBackground;
+  }
+}
+
 @mixin messegeTheme($theme) {
   background-color: $theme;
   font-family: "Roboto", sans-serif;
