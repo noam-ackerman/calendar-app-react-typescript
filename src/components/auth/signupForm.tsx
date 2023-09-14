@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SignupFormData } from "../../utils/interfaces";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../ctx/authCtx";
 import * as yup from "yup";
 
 export default function SignupForm(): JSX.Element {
+  const { SignupUser } = useAuth();
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -27,8 +34,25 @@ export default function SignupForm(): JSX.Element {
     clearErrors,
   } = useForm<SignupFormData>({ resolver: yupResolver(schema) });
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
+  const onSubmit = handleSubmit(async (data): Promise<void> => {
+    try {
+      setError("");
+      setLoading(true);
+      await SignupUser(data.email, data.password);
+      navigate("/");
+    } catch (err: any) {
+      if (err.code === "auth/invalid-email") {
+        setError("Email must be valid.");
+      } else if (err.code === "auth/weak-password") {
+        setError("Password must be at least 6 characters.");
+      } else if (err.code === "auth/email-already-in-use") {
+        setError("Email is already in use.");
+      } else {
+        setError("Failed to sign up.");
+      }
+    } finally {
+      setLoading(false);
+    }
   });
 
   return (
@@ -44,6 +68,10 @@ export default function SignupForm(): JSX.Element {
           {errors.passwordConfirmation.message}
         </div>
       )}
+      {!errors.email &&
+        !errors.password &&
+        !errors.passwordConfirmation &&
+        error && <div className="error-message">{error}</div>}
       <div className="input-group">
         <label htmlFor="email">Email</label>
         <input

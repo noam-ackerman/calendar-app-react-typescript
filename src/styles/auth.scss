@@ -32,7 +32,6 @@
       background-color: $lighterPink-color;
       text-decoration: none;
       color: $blue-color;
-      //   font-family: "Lora", serif;
       font-family: "Space Mono", monospace;
       font-weight: 700;
       font-size: 1.3rem;
@@ -54,6 +53,9 @@
   form {
     .error-message {
       @include messegeTheme($theme: $lightRed-color);
+    }
+    .success-message {
+      @include messegeTheme($theme: $green-color);
     }
     @include flexColumn($gap: 1.2rem, $direction: flex-start);
     .input-group {

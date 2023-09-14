@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import FormCard from "./components/auth/formCard";
+import CalendarPage from "./components/calendar/calendarPage";
 import "./styles/styles.scss";
 
 function App(): JSX.Element {
@@ -8,7 +9,7 @@ function App(): JSX.Element {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<></>} />
+          <Route path="/" element={<CalendarPage />} />
           <Route path="/login" element={<FormCard formType="login" />} />
           <Route path="/signup" element={<FormCard formType="signup" />} />
           <Route
