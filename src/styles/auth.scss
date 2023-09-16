@@ -80,6 +80,20 @@
         );
         align-self: center;
         margin-top: 1rem;
+        &:disabled {
+          position: relative;
+          background-color: $lighterBlue-color;
+          cursor: $default-cursor;
+          span {
+            opacity: 0;
+          }
+        }
+        .ovalBtn {
+          position: absolute;
+          right: 50%;
+          bottom: 50%;
+          transform: translate(50%, 50%);
+        }
       }
       a {
         color: #fff;

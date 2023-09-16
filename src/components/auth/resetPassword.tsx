@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ResetPasswordFormData } from "../../utils/interfaces";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../ctx/authCtx";
+import { OvalBtn } from "../../utils/spinners";
 import * as yup from "yup";
 
 export default function ResetPassword(): JSX.Element {
@@ -56,7 +57,10 @@ export default function ResetPassword(): JSX.Element {
           onChange={() => clearErrors()}
         />
       </div>
-      <button type="submit">Reset Password</button>
+      <button disabled={loading} type="submit">
+        {loading && <OvalBtn color="#3a86ff" />}
+        <span>Reset Password</span>
+      </button>
       <Link to="/login" title="login">
         Back to login
       </Link>

@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginFormData } from "../../utils/interfaces";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../ctx/authCtx";
+import { OvalBtn } from "../../utils/spinners";
 import * as yup from "yup";
 
 export default function LoginForm(): JSX.Element {
@@ -77,7 +78,10 @@ export default function LoginForm(): JSX.Element {
           onChange={() => clearErrors()}
         />
       </div>
-      <button type="submit">Login</button>
+      <button disabled={loading} type="submit">
+        {loading && <OvalBtn color="#3a86ff" />}
+        <span>Login</span>
+      </button>
       <Link to="/resetpassword" title="resetPassword">
         Forgot your password?
       </Link>

@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SignupFormData } from "../../utils/interfaces";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../ctx/authCtx";
+import { OvalBtn } from "../../utils/spinners";
 import * as yup from "yup";
 
 export default function SignupForm(): JSX.Element {
@@ -102,7 +103,10 @@ export default function SignupForm(): JSX.Element {
           onChange={() => clearErrors()}
         />
       </div>
-      <button type="submit">Signup</button>
+      <button disabled={loading} type="submit">
+        {loading && <OvalBtn color="#3a86ff" />}
+        <span>Signup</span>
+      </button>
     </form>
   );
 }
