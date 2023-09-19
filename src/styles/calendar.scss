@@ -1,0 +1,76 @@
+@import "./variables.scss";
+
+.calendarWrapper {
+  width: min(800px, 100%);
+  border: 2px solid $blue-color;
+  border-radius: $border-radius;
+  margin: auto;
+  box-shadow: $box-shadow;
+  overflow: hidden;
+  .calendarHeader {
+    @include grid($repeat: 7, $textAlign: center);
+    border-bottom: 2px solid $blue-color;
+    font-family: $spacemono;
+    .material-icons {
+      font-size: 2rem;
+    }
+    .currentMonthYear {
+      grid-column: 3 / 6;
+    }
+    & > * {
+      padding: 1.2rem 0.8rem;
+      @include flexRow();
+    }
+    button {
+      @include calendarButton(
+        $color: $lightBlue-color,
+        $background: $blue-color,
+        $hoverBackground: $lighterPink-color
+      );
+    }
+
+    div {
+      color: $blue-color;
+      background-color: $lightBlue-color;
+    }
+  }
+  .daysTitle {
+    @include grid($repeat: 7, $textAlign: center);
+    font-family: $spacemono;
+    .dayTitle {
+      background-color: $lightBlue-color;
+      padding: 1.2rem 0.8rem;
+      border-right: 2px solid $blue-color;
+      &:last-child {
+        border: none;
+      }
+    }
+  }
+  .days {
+    @include grid($repeat: 7, $textAlign: center);
+    font-family: $roboto;
+    &.singleDayDisplay {
+      border-bottom: 2px solid $blue-color;
+    }
+    & > * {
+      height: 5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-top: 2px solid $blue-color;
+    }
+    & > *:not(.day) {
+      background-color: $orange-color;
+    }
+    .day {
+      background-color: $lighterPink-color;
+      cursor: $pointer-cursor;
+      &.selected span {
+        @include daySelection();
+      }
+      &:hover span {
+        @include daySelection();
+      }
+    }
+  }
+}

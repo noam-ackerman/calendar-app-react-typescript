@@ -1,13 +1,13 @@
 @import "./variables.scss";
 
-@mixin flexRow($gap: 1rem, $direction: center) {
+@mixin flexRow($gap: 0, $direction: center) {
   display: flex;
   align-items: center;
   justify-content: $direction;
   gap: $gap;
 }
 
-@mixin flexColumn($gap: 1rem, $direction: center) {
+@mixin flexColumn($gap: 0, $direction: center) {
   display: flex;
   flex-direction: column;
   align-items: $direction;
@@ -30,6 +30,18 @@
     background-color: $hoverBackground;
   }
 }
+@mixin calendarButton($color, $background, $hoverBackground) {
+  background-color: $background;
+  border: 2px solid $background;
+  font-family: "Space Mono", monospace;
+  color: $color;
+  font-size: 1.1rem;
+  transition: $transition;
+  //   &:hover {
+  //     color: $background;
+  //     background-color: $hoverBackground;
+  //   }
+}
 
 @mixin messegeTheme($theme) {
   background-color: $theme;
@@ -40,4 +52,22 @@
   box-sizing: border-box;
   font-size: 0.9rem;
   color: #fff;
+}
+
+@mixin grid($repeat, $textAlign) {
+  display: grid;
+  grid-template-columns: repeat($repeat, (minmax(0, 1fr)));
+  text-align: $textAlign;
+}
+
+@mixin daySelection($color: $pink-color) {
+  background-color: $color;
+  border-radius: 9999px;
+  height: 3.6rem;
+  width: 3.6rem;
+  @include flexRow();
+  transition: $transitionBackground;
+  -webkit-transition: $transitionBackground;
+  -o-transition: $transitionBackground;
+  -moz-transition: $transitionBackground;
 }

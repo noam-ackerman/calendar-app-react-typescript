@@ -1,5 +1,6 @@
 import { useAuth } from "../../ctx/authCtx";
 import { useNavigate } from "react-router-dom";
+import Calendar from "./calendar";
 
 export default function CalendarPage(): JSX.Element {
   const { LogoutUser } = useAuth();
@@ -15,8 +16,8 @@ export default function CalendarPage(): JSX.Element {
   };
   return (
     <>
-      <div>Calendar</div>
       <button onClick={handleLogout}>Logout</button>
+      <Calendar />
     </>
   );
 }

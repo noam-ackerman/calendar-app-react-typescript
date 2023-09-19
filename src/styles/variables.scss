@@ -14,7 +14,13 @@ $lightGreen-color: #cbffd4;
 $default-cursor: url(https://cur.cursors-4u.net/nature/nat-10/nat991.cur), auto;
 $pointer-cursor: url(https://cur.cursors-4u.net/nature/nat-10/nat997.cur), auto;
 
+/*fonts*/
+$spacemono: "Space Mono", monospace;
+$roboto: "Roboto", sans-serif;
+$lora: "Lora", serif;
+
 $transition: all 200ms ease;
+$transitionBackground: background-color 200ms ease;
 $border-radius: 8px;
 $box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 $box-shadow-no-top: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,

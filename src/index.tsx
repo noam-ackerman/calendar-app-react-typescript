@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { AuthContextProvider } from "./ctx/authCtx";
+import { CalendarContextProvider } from "./ctx/calendarCtx";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
@@ -10,7 +11,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <AuthContextProvider>
-      <App />
+      <CalendarContextProvider>
+        <App />
+      </CalendarContextProvider>
     </AuthContextProvider>
   </React.StrictMode>
 );

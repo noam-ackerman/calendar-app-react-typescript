@@ -1,3 +1,4 @@
+import React, { Dispatch, SetStateAction } from "react";
 import { CurrentUserType } from "./types";
 import { UserCredential } from "firebase/auth";
 
@@ -26,4 +27,11 @@ export interface AuthContextType {
   LoginUser: (email: string, password: string) => Promise<UserCredential>;
   LogoutUser: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
+}
+
+export interface CalendarContextType {
+  currentDate: Date;
+  setCurrentDate: Dispatch<SetStateAction<Date>>;
+  singleDayDisplay: boolean;
+  setSingleDayDisplay: Dispatch<SetStateAction<boolean>>;
 }
