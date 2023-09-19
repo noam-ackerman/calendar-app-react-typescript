@@ -12,9 +12,7 @@ export default function FormCard({ formType }: Props): JSX.Element {
   return (
     <div className="authWrapper">
       <div className="authTitle">
-        <span className="material-symbols-outlined calendar-icon">
-          calendar_month
-        </span>
+        <span className="material-icons">calendar_month</span>
         <span className="text">~ My Calendar</span>
       </div>
       <div className="authButtons">
