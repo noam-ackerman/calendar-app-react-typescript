@@ -1,75 +1,205 @@
 @import "./variables.scss";
+.calendarPage {
+  height: 100vh;
+  padding: 2rem 0;
+  box-sizing: border-box;
+  .calendarWrapper {
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    width: 1000px;
+    border-radius: $border-radius;
+    margin: 0 auto;
+    box-shadow: $box-shadow-no-top;
+    overflow: hidden;
+    .calendarHeader {
+      @include grid($repeat: 7, $textAlign: center);
+      border-bottom: 1px solid $blue-color;
+      font-family: $spacemono;
+      .material-icons {
+        font-size: 2rem;
+      }
+      .currentMonthYear {
+        grid-column: 3 / 6;
+      }
+      & > * {
+        padding: 1rem 0.8rem;
+        @include flexRow();
+      }
+      button {
+        @include calendarButton(
+          $color: $lightBlue-color,
+          $background: $blue-color,
+          $hoverBackground: $lighterPink-color
+        );
+      }
 
-.calendarWrapper {
-  width: min(800px, 100%);
-  border: 2px solid $blue-color;
-  border-radius: $border-radius;
-  margin: auto;
-  box-shadow: $box-shadow;
-  overflow: hidden;
-  .calendarHeader {
-    @include grid($repeat: 7, $textAlign: center);
-    border-bottom: 2px solid $blue-color;
-    font-family: $spacemono;
-    .material-icons {
-      font-size: 2rem;
-    }
-    .currentMonthYear {
-      grid-column: 3 / 6;
-    }
-    & > * {
-      padding: 1.2rem 0.8rem;
-      @include flexRow();
-    }
-    button {
-      @include calendarButton(
-        $color: $lightBlue-color,
-        $background: $blue-color,
-        $hoverBackground: $lighterPink-color
-      );
-    }
-
-    div {
-      color: $blue-color;
-      background-color: $lightBlue-color;
-    }
-  }
-  .daysTitle {
-    @include grid($repeat: 7, $textAlign: center);
-    font-family: $spacemono;
-    .dayTitle {
-      background-color: $lightBlue-color;
-      padding: 1.2rem 0.8rem;
-      border-right: 2px solid $blue-color;
-      &:last-child {
-        border: none;
+      div {
+        color: $blue-color;
+        background-color: $lightBlue-color;
       }
     }
-  }
-  .days {
-    @include grid($repeat: 7, $textAlign: center);
-    font-family: $roboto;
-    &.singleDayDisplay {
-      border-bottom: 2px solid $blue-color;
+    .daysTitle {
+      @include grid($repeat: 7, $textAlign: center);
+      font-family: $spacemono;
+      .dayTitle {
+        background-color: $lightBlue-color;
+        padding: 1.2rem 0.8rem;
+        border: 1px solid $blue-color;
+        &:first-child {
+          border-left: none;
+        }
+        &:last-child {
+          border-right: none;
+        }
+      }
     }
-    & > * {
-      height: 5rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-top: 2px solid $blue-color;
+    .days {
+      @include grid($repeat: 7, $textAlign: center);
+      font-family: $roboto;
+      position: relative;
+      &.singleDayDisplay {
+        border-bottom: 2px solid $blue-color;
+      }
+      & > * {
+        min-height: 5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-top: 1px solid $blue-color;
+        border-bottom: 1px solid $blue-color;
+      }
+      & > *:nth-last-child(-n + 7) {
+        border-bottom: none;
+      }
+      .emptyDay {
+        background-color: $pink-color;
+      }
+      .day {
+        background-color: $lighterPink-color;
+        cursor: $pointer-cursor;
+        &.selected span {
+          @include daySelection();
+        }
+        &:hover span {
+          @include daySelection();
+        }
+      }
+      .prevWeek,
+      .nextWeek {
+        position: absolute;
+        cursor: $pointer-cursor;
+        color: $lighterPink-color;
+        transition: $transition;
+        background-color: $blue-color;
+        padding: 0rem 0.2rem;
+        & span {
+          font-size: 1.3rem;
+        }
+        &:hover {
+          color: $pink-color;
+        }
+      }
+      .prevWeek {
+        left: 0px;
+      }
+      .nextWeek {
+        right: 0px;
+      }
     }
-    & > *:not(.day) {
-      background-color: $orange-color;
+    .allDayWrapper {
+      @include flexRow($gap: 1rem, $justifyContent: space-between);
+      background-color: $pink-color;
+      padding: 0.7rem 1rem;
+      font-size: 0.8rem;
+      .allDayText {
+        font-family: $spacemono;
+      }
+      .allDayBlocks {
+        @include flexRow($gap: 0.5rem);
+        flex-wrap: wrap;
+        flex: 1;
+        .allDayEventBlock {
+          background-color: $lighterBlue-color;
+          border-radius: $border-radius;
+          padding: 0.4rem 0.8rem;
+          font-family: $roboto;
+          font-size: 0.8rem;
+          flex: 1;
+          min-width: fit-content;
+        }
+      }
     }
-    .day {
+    .dayWrapper {
       background-color: $lighterPink-color;
-      cursor: $pointer-cursor;
-      &.selected span {
-        @include daySelection();
+      padding: 3rem 2rem 2.3rem;
+      overflow-y: auto;
+      .hourBlock {
+        @include flexRow($gap: 0.8rem, $justifyContent: space-between);
+        height: 8rem;
+        text-align: right;
+        .box {
+          height: 100%;
+          position: relative;
+          .event {
+            font-family: $roboto;
+            background-color: rgb(194, 218, 255, 0.8);
+            border-radius: $border-radius;
+            text-align: left;
+            position: absolute;
+            width: 100%;
+            box-sizing: border-box;
+            z-index: 1;
+            border-left: 2px solid $blue-color;
+            .eventText {
+              padding: 0.3rem 0.6rem 0.4rem;
+              max-height: 100%;
+              .eventTitle {
+                font-size: 0.9rem;
+                color: $blue-color;
+                .eventTime {
+                  font-size: 0.7rem;
+                  color: $purple-color;
+                  padding-left: 0.3rem;
+                }
+              }
+            }
+          }
+        }
       }
-      &:hover span {
-        @include daySelection();
+      .midnight {
+        text-align: right;
+        @include flexRow($gap: 0.8rem, $justifyContent: space-between);
+      }
+      .box {
+        border-top: 1px solid $blue-color;
+        flex: 1;
+      }
+      .hour {
+        background-color: $lighterPink-color;
+        align-self: flex-start;
+        position: relative;
+        top: -7.3%;
+      }
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .calendarPage {
+    padding: 0;
+    .calendarWrapper {
+      height: 100%;
+      width: 100%;
+      border-radius: 0;
+      .currentMonthYear {
+        font-size: 0.8rem !important;
+      }
+      .days {
+        flex: 1;
+      }
+      .dayWrapper {
+        padding: 2.5rem 1.2rem 1.8rem;
       }
     }
   }

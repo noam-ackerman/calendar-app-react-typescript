@@ -34,4 +34,13 @@ export interface CalendarContextType {
   setCurrentDate: Dispatch<SetStateAction<Date>>;
   singleDayDisplay: boolean;
   setSingleDayDisplay: Dispatch<SetStateAction<boolean>>;
+  fakeData: any;
+}
+
+export interface Event {
+  id: number;
+  startingTime: string;
+  endingTime: string;
+  allDay: boolean;
+  title: string;
 }

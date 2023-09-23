@@ -8,7 +8,7 @@ import {
 import PrivateRoute from "./components/routesWrappers/privateRoute";
 import PublicAuthRoute from "./components/routesWrappers/publicAuthRoute";
 import FormCard from "./components/auth/formCard";
-import CalendarPage from "./components/calendar/calendarPage";
+import Calendar from "./components/calendar/calendar";
 import "./styles/styles.scss";
 
 function App(): JSX.Element {
@@ -20,7 +20,7 @@ function App(): JSX.Element {
             path="/"
             element={
               <PrivateRoute>
-                <CalendarPage />
+                <Calendar />
               </PrivateRoute>
             }
           />

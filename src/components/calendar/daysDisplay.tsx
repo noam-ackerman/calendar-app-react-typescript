@@ -20,7 +20,7 @@ export default function DaysDisplay(): JSX.Element {
     <div className="days">
       {Array.from({ length: prefixDays }).map((_, index) => {
         const date = index + 1;
-        return <div key={date}></div>;
+        return <div className="emptyDay" key={date}></div>;
       })}
       {Array.from({ length: numDays }).map((_, index) => {
         const date = index + 1;
@@ -36,7 +36,7 @@ export default function DaysDisplay(): JSX.Element {
       })}
       {Array.from({ length: suffixDays }).map((_, index) => {
         const date = index + 1;
-        return <div key={date}></div>;
+        return <div className="emptyDay" key={date}></div>;
       })}
     </div>
   );

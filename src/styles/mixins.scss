@@ -1,16 +1,16 @@
 @import "./variables.scss";
 
-@mixin flexRow($gap: 0, $direction: center) {
+@mixin flexRow($gap: 0, $justifyContent: center) {
   display: flex;
   align-items: center;
-  justify-content: $direction;
+  justify-content: $justifyContent;
   gap: $gap;
 }
 
-@mixin flexColumn($gap: 0, $direction: center) {
+@mixin flexColumn($gap: 0, $alignItems: center) {
   display: flex;
   flex-direction: column;
-  align-items: $direction;
+  align-items: $alignItems;
   justify-content: center;
   gap: $gap;
 }
@@ -37,10 +37,9 @@
   color: $color;
   font-size: 1.1rem;
   transition: $transition;
-  //   &:hover {
-  //     color: $background;
-  //     background-color: $hoverBackground;
-  //   }
+  &:hover {
+    color: $hoverBackground;
+  }
 }
 
 @mixin messegeTheme($theme) {
