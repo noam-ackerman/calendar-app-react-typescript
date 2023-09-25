@@ -34,13 +34,16 @@ export interface CalendarContextType {
   setCurrentDate: Dispatch<SetStateAction<Date>>;
   singleDayDisplay: boolean;
   setSingleDayDisplay: Dispatch<SetStateAction<boolean>>;
-  fakeData: any;
+  addEventOpen: boolean;
+  setAddEventOpen: Dispatch<SetStateAction<boolean>>;
+  userEvents: Event[];
+  setUserEvents: Dispatch<SetStateAction<Event[]>>;
 }
 
 export interface Event {
-  id: number;
-  startingTime: string;
-  endingTime: string;
+  id: string;
+  starting: Date;
+  ending: Date;
   allDay: boolean;
   title: string;
 }

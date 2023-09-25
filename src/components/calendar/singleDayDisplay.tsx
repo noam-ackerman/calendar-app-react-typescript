@@ -1,69 +1,35 @@
 import { useMemo } from "react";
-import { lastDayOfWeek, startOfWeek, add, sub } from "date-fns";
+import { add, sub, isBefore, isAfter, startOfDay } from "date-fns";
+import { hours } from "../../utils/helpers";
 import { useCalendarCtx } from "../../ctx/calendarCtx";
-import { Event } from "../../utils/interfaces";
+import { returnFullWeek } from "../../utils/helpers";
 import HourBlock from "./hourBlock";
 
-const hours: string[] = [
-  "0",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "10",
-  "11",
-  "12",
-  "13",
-  "14",
-  "15",
-  "16",
-  "17",
-  "18",
-  "19",
-  "20",
-  "21",
-  "22",
-  "23",
-];
-
 export default function SingleDayDisplay(): JSX.Element {
-  const { currentDate, setCurrentDate, fakeData } = useCalendarCtx();
-  const startWeek = startOfWeek(currentDate);
-  const lastWeek = lastDayOfWeek(currentDate);
+  const { currentDate, setCurrentDate, userEvents } = useCalendarCtx();
   const selectedDate = currentDate.getDate();
-  const week = [startWeek];
+  const week = returnFullWeek(currentDate);
 
-  const year = currentDate.getFullYear().toString();
-  const month = (currentDate.getMonth() + 1).toString();
-  const events: Event[] | undefined =
-    fakeData[year] && fakeData[year][month]
-      ? fakeData[year][month][selectedDate.toString()]
-      : undefined;
+  const dayEvents = useMemo(() => {
+    return userEvents.filter(
+      (event) =>
+        event.starting.toDateString() === currentDate.toDateString() ||
+        event.ending.toDateString() === currentDate.toDateString() ||
+        (isBefore(event.starting, currentDate) &&
+          isAfter(event.ending, currentDate))
+    );
+  }, [userEvents, currentDate]);
 
-  const allDayEvents = useMemo(() => {
-    return events?.filter((event) => event.allDay === true);
-  }, [events]);
-
-  const notAlldayEvents = useMemo(
-    () => events?.filter((event) => event.allDay === false),
-    [events]
+  const allDayEvent = useMemo(
+    () =>
+      dayEvents?.filter(
+        (event) =>
+          event.allDay ||
+          (isBefore(event.starting, currentDate) &&
+            isAfter(startOfDay(event.ending), currentDate))
+      ),
+    [dayEvents, currentDate]
   );
-
-  const addDaysToWeek = (): void => {
-    let value = add(week[week.length - 1], { days: 1 });
-    if (value.toString() === lastWeek.toString()) {
-      week.push(lastWeek);
-      return;
-    } else {
-      week.push(value);
-      addDaysToWeek();
-    }
-  };
-  addDaysToWeek();
 
   const prevWeek = () => setCurrentDate(sub(currentDate, { weeks: 1 }));
   const nextWeek = () => setCurrentDate(add(currentDate, { weeks: 1 }));
@@ -94,22 +60,24 @@ export default function SingleDayDisplay(): JSX.Element {
           );
         })}
       </div>
-      {allDayEvents?.length ? (
+      {allDayEvent.length ? (
         <div className="allDayWrapper">
           <div className="allDayText">all-day</div>
           <div className="allDayBlocks">
-            {allDayEvents.map((event) => (
-              <div className="allDayEventBlock">{event.title}</div>
+            {allDayEvent.map((event) => (
+              <div key={event.id} className="allDayEventBlock">
+                {event.title}
+              </div>
             ))}
           </div>
         </div>
       ) : null}
       <div className="dayWrapper">
         {hours.map((hour, i) => (
-          <HourBlock key={i} hour={hour} events={notAlldayEvents} />
+          <HourBlock key={i} hour={hour} events={dayEvents} />
         ))}
         <div className="midnight">
-          <div className="hour">0:00</div>
+          <div className="hour">00:00</div>
           <div className="box"></div>
         </div>
       </div>

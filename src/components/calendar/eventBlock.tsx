@@ -21,12 +21,7 @@ export default function EventBlock({ event, top, height }: Props): JSX.Element {
           }`,
         }}
       >
-        <span className="eventTitle">
-          {event.title}{" "}
-          <span className="eventTime">
-            {event.startingTime} - {event.endingTime}
-          </span>
-        </span>
+        <span className="eventTitle">{event.title} </span>
       </div>
     </div>
   );

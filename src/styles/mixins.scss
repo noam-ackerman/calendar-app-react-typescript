@@ -1,5 +1,3 @@
-@import "./variables.scss";
-
 @mixin flexRow($gap: 0, $justifyContent: center) {
   display: flex;
   align-items: center;
@@ -30,7 +28,7 @@
     background-color: $hoverBackground;
   }
 }
-@mixin calendarButton($color, $background, $hoverBackground) {
+@mixin calendarButton($color, $background, $hoverColor) {
   background-color: $background;
   border: 2px solid $background;
   font-family: "Space Mono", monospace;
@@ -38,7 +36,7 @@
   font-size: 1.1rem;
   transition: $transition;
   &:hover {
-    color: $hoverBackground;
+    color: $hoverColor;
   }
 }
 

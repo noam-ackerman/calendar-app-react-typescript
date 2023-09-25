@@ -17,7 +17,7 @@ export default function DaysDisplay(): JSX.Element {
   };
 
   return (
-    <div className="days">
+    <div className="days daysDisplay">
       {Array.from({ length: prefixDays }).map((_, index) => {
         const date = index + 1;
         return <div className="emptyDay" key={date}></div>;
