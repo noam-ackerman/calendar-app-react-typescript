@@ -34,10 +34,14 @@ export interface CalendarContextType {
   setCurrentDate: Dispatch<SetStateAction<Date>>;
   singleDayDisplay: boolean;
   setSingleDayDisplay: Dispatch<SetStateAction<boolean>>;
-  addEventOpen: boolean;
-  setAddEventOpen: Dispatch<SetStateAction<boolean>>;
+  eventFormOpen: boolean;
+  setEventFormOpen: Dispatch<SetStateAction<boolean>>;
   userEvents: Event[];
   setUserEvents: Dispatch<SetStateAction<Event[]>>;
+  addEvent: (data: Event) => Promise<void>;
+  currentEvent: Event | null;
+  setCurrentEvent: Dispatch<SetStateAction<Event | null>>;
+  deleteEvent: () => Promise<void>;
 }
 
 export interface Event {

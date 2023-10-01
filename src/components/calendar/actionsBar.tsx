@@ -7,10 +7,12 @@ export default function ActionsBar(): JSX.Element {
   const { LogoutUser } = useAuth();
   const {
     currentDate,
-    addEventOpen,
-    setAddEventOpen,
+    eventFormOpen,
+    setEventFormOpen,
     singleDayDisplay,
     setSingleDayDisplay,
+    currentEvent,
+    setCurrentEvent,
   } = useCalendarCtx();
   const navigate = useNavigate();
 
@@ -25,13 +27,25 @@ export default function ActionsBar(): JSX.Element {
   return (
     <div className="actionsBar">
       <div className="returnButtons">
-        {addEventOpen && (
-          <button className="goBack" onClick={() => setAddEventOpen(false)}>
+        {currentEvent && !eventFormOpen && (
+          <button className="goBack" onClick={() => setCurrentEvent(null)}>
+            <span className="material-icons">arrow_back</span>{" "}
+            <span className="text">{format(currentDate, "dd MMM yy")}</span>
+          </button>
+        )}
+        {eventFormOpen && !currentEvent && (
+          <button className="goBack" onClick={() => setEventFormOpen(false)}>
             <span className="material-icons">arrow_back</span>{" "}
             <span className="text">calendar</span>
           </button>
         )}
-        {singleDayDisplay && (
+        {currentEvent && eventFormOpen && (
+          <button className="goBack" onClick={() => setEventFormOpen(false)}>
+            <span className="material-icons">arrow_back</span>{" "}
+            <span className="text">{currentEvent.title}</span>
+          </button>
+        )}
+        {singleDayDisplay && !currentEvent && (
           <button className="goBack" onClick={() => setSingleDayDisplay(false)}>
             <span className="material-icons">arrow_back</span>{" "}
             <span className="text">{format(currentDate, "MMM yy")}</span>
@@ -42,7 +56,7 @@ export default function ActionsBar(): JSX.Element {
         <button
           className="addEvent"
           onClick={() => {
-            setAddEventOpen(true);
+            setEventFormOpen(true);
             singleDayDisplay && setSingleDayDisplay(false);
           }}
         >

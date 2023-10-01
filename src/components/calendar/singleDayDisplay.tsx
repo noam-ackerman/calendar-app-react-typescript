@@ -6,7 +6,8 @@ import { returnFullWeek } from "../../utils/helpers";
 import HourBlock from "./hourBlock";
 
 export default function SingleDayDisplay(): JSX.Element {
-  const { currentDate, setCurrentDate, userEvents } = useCalendarCtx();
+  const { currentDate, setCurrentDate, userEvents, setCurrentEvent } =
+    useCalendarCtx();
   const selectedDate = currentDate.getDate();
   const week = returnFullWeek(currentDate);
 
@@ -34,10 +35,6 @@ export default function SingleDayDisplay(): JSX.Element {
   const prevWeek = () => setCurrentDate(sub(currentDate, { weeks: 1 }));
   const nextWeek = () => setCurrentDate(add(currentDate, { weeks: 1 }));
 
-  const handleDayClick = (date: Date): void => {
-    setCurrentDate(date);
-  };
-
   return (
     <>
       <div className="days singleDayDisplay">
@@ -53,7 +50,7 @@ export default function SingleDayDisplay(): JSX.Element {
             <div
               className={`day ${selectedDate === day ? "selected" : ""}`}
               key={day}
-              onClick={() => handleDayClick(date)}
+              onClick={() => setCurrentDate(date)}
             >
               <span>{day}</span>
             </div>
@@ -65,7 +62,13 @@ export default function SingleDayDisplay(): JSX.Element {
           <div className="allDayText">all-day</div>
           <div className="allDayBlocks">
             {allDayEvent.map((event) => (
-              <div key={event.id} className="allDayEventBlock">
+              <div
+                key={event.id}
+                onClick={() => {
+                  setCurrentEvent(event);
+                }}
+                className="allDayEventBlock"
+              >
                 {event.title}
               </div>
             ))}

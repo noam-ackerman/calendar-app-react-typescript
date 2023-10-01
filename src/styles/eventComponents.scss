@@ -1,0 +1,111 @@
+.eventComponentWrapper {
+  background-color: $lighterPink-color;
+  flex: 1;
+  padding: 2.5rem 3rem;
+  overflow-y: scroll;
+  .title {
+    font-family: $spacemono;
+    color: $lightBlue-color;
+    font-size: 2rem;
+    font-weight: bold;
+    -webkit-text-stroke: 1px black;
+  }
+  .eventDetails {
+    @include flexColumn($gap: 0.7rem, $alignItems: flex-start);
+    font-family: $roboto;
+    padding: 1.5rem 0;
+    color: #000;
+    .eventTitle {
+      background-color: $lightBlue-color;
+      padding: 0.05rem 0.4rem;
+      text-transform: capitalize;
+      font-size: 1.15rem;
+      font-weight: bold;
+      margin-bottom: 0.2rem;
+    }
+    .eventDate {
+      font-size: 1.05rem;
+    }
+  }
+  .actions {
+    @include flexRow($gap: 0.7rem, $justifyContent: flex-start);
+    margin: 1rem 0 0.5rem;
+    .editEvent {
+      @include primaryButton(
+        $color: $blue-color,
+        $background: $lightBlue-color,
+        $hoverBackground: $lighterBlue-color
+      );
+    }
+    .deleteEvent {
+      @include primaryButton(
+        $color: #000,
+        $background: $lightRed-color,
+        $hoverBackground: $lighterRed-color
+      );
+    }
+  }
+  .error-message {
+    @include messegeTheme($theme: $lightRed-color);
+    width: 25em;
+    max-width: 100%;
+    &.small {
+      width: fit-content;
+    }
+  }
+
+  form {
+    @include flexColumn($gap: 1.5rem, $alignItems: flex-start);
+    font-family: $roboto;
+    .allDay-label {
+      margin-right: 0.5rem;
+    }
+    .allDay-label,
+    label:not(.MuiFormLabel-root) {
+      font-family: $spacemono;
+      font-size: 0.8rem;
+      background-color: $lightBlue-color;
+      padding: 0 0.5rem;
+    }
+    .input-group {
+      width: 100%;
+      @include flexColumn($gap: 1.2rem, $alignItems: flex-start);
+      flex-wrap: wrap;
+      input {
+        font-family: $roboto;
+        border-radius: $border-radius;
+        box-shadow: $box-shadow;
+        &.MuiInputBase-input {
+          cursor: $pointer-cursor;
+        }
+      }
+
+      &:not(.picker-group) {
+        input {
+          width: 25rem;
+          max-width: 100%;
+          box-sizing: border-box;
+          padding: 0.8rem;
+          border-radius: $border-radius;
+          border: none;
+          font-family: $roboto;
+          font-size: 0.9rem;
+        }
+      }
+    }
+    button.submitBtn {
+      @include primaryButton(
+        $color: $blue-color,
+        $background: $lightBlue-color,
+        $hoverBackground: $lighterBlue-color
+      );
+      margin: 1rem 0 0.5rem;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .eventComponentWrapper {
+    padding: 2rem;
+  }
+}

@@ -1,4 +1,5 @@
 import { Event } from "../../utils/interfaces";
+import { useCalendarCtx } from "../../ctx/calendarCtx";
 
 interface Props {
   event: Event;
@@ -7,9 +8,13 @@ interface Props {
 }
 
 export default function EventBlock({ event, top, height }: Props): JSX.Element {
+  const { setCurrentEvent } = useCalendarCtx();
   return (
     <div
       className="event"
+      onClick={() => {
+        setCurrentEvent(event);
+      }}
       style={{ top: `${top}%`, height: `calc(${height}% - 1px)` }}
     >
       <div
@@ -17,7 +22,7 @@ export default function EventBlock({ event, top, height }: Props): JSX.Element {
         style={{
           display: `${height < 16.5 ? "none" : "block"}`,
           padding: `${
-            height > 16.5 && height < 16.7 ? "0 0.6rem" : "0.3rem 0.6rem 0.4rem"
+            height > 16.5 && height < 16.7 ? "0 0.6rem" : "0.4rem 0.6rem"
           }`,
         }}
       >

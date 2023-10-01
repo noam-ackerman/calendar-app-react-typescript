@@ -1,4 +1,5 @@
 import { lastDayOfWeek, startOfWeek, add } from "date-fns";
+import { Event } from "./interfaces";
 
 const daysWeek: string[] = ["S", "M", "T", "W", "T", "F", "S"];
 
@@ -51,4 +52,16 @@ const returnFullWeek = (currentDate: Date): Date[] => {
   return week;
 };
 
-export { roundToNearest5, daysWeek, hours, returnFullWeek };
+const formatEventDates = (event: Event): Event => {
+  const starting = new Date(event.starting);
+  const ending = new Date(event.ending);
+  return {
+    id: event.id,
+    title: event.title,
+    allDay: event.allDay,
+    starting: starting,
+    ending: ending,
+  };
+};
+
+export { roundToNearest5, daysWeek, hours, returnFullWeek, formatEventDates };

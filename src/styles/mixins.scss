@@ -1,15 +1,15 @@
-@mixin flexRow($gap: 0, $justifyContent: center) {
+@mixin flexRow($gap: 0, $justifyContent: center, $alignItems: center) {
   display: flex;
-  align-items: center;
+  align-items: $alignItems;
   justify-content: $justifyContent;
   gap: $gap;
 }
 
-@mixin flexColumn($gap: 0, $alignItems: center) {
+@mixin flexColumn($gap: 0, $justifyContent: center, $alignItems: center) {
   display: flex;
   flex-direction: column;
   align-items: $alignItems;
-  justify-content: center;
+  justify-content: $justifyContent;
   gap: $gap;
 }
 
@@ -27,7 +27,34 @@
   &:hover {
     background-color: $hoverBackground;
   }
+  &:disabled {
+    position: relative;
+    background-color: $hoverBackground;
+    pointer-events: none;
+    cursor: $default-cursor;
+    span {
+      opacity: 0;
+    }
+    .ovalBtn {
+      position: absolute;
+      right: 50%;
+      bottom: 50%;
+      transform: translate(50%, 50%);
+    }
+    &.error-disabled {
+      background-color: gray;
+      color: ghostwhite;
+      border-color: gray;
+      span {
+        opacity: 1;
+      }
+    }
+  }
+  @media (max-width: 767px) {
+    font-size: 0.9rem;
+  }
 }
+
 @mixin calendarButton($color, $background, $hoverColor) {
   background-color: $background;
   border: 2px solid $background;
@@ -60,11 +87,15 @@
 @mixin daySelection($color: $pink-color) {
   background-color: $color;
   border-radius: 9999px;
-  height: 3.6rem;
-  width: 3.6rem;
+  height: 3.3rem;
+  width: 3.3rem;
   @include flexRow();
   transition: $transitionBackground;
   -webkit-transition: $transitionBackground;
   -o-transition: $transitionBackground;
   -moz-transition: $transitionBackground;
+  @media (max-width: 767px) {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
 }

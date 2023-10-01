@@ -33,6 +33,7 @@
       background-color: $lightBlue-color;
       padding: 1.2rem 0.8rem;
       border: 1px solid $blue-color;
+      font-size: 1rem;
       &:first-child {
         border-left: none;
       }
@@ -45,17 +46,34 @@
     @include grid($repeat: 7, $textAlign: center);
     font-family: $roboto;
     position: relative;
+    flex: 1;
     &.singleDayDisplay {
       border-bottom: 2px solid $blue-color;
+      .day {
+        @include flexRow();
+        font-size: 1rem;
+      }
     }
     &.daysDisplay {
       overflow-y: scroll;
+      .day {
+        @include flexColumn($gap: 0.2rem);
+        font-size: 1.1rem;
+        padding: 0.5rem 0;
+        span {
+          height: 3.3rem;
+          width: 3.3rem;
+          @include flexRow();
+        }
+        .hasEvent {
+          font-size: 0.8rem;
+          color: $pink-color;
+          -webkit-text-stroke: 2px black;
+        }
+      }
     }
     & > * {
       min-height: 5rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       border-top: 1px solid $blue-color;
       border-bottom: 1px solid $blue-color;
     }
@@ -68,6 +86,7 @@
     .day {
       background-color: $lighterPink-color;
       cursor: $pointer-cursor;
+      position: relative;
       &.selected span {
         @include daySelection();
       }
@@ -77,12 +96,14 @@
     }
     .prevWeek,
     .nextWeek {
+      @include flexRow();
       position: absolute;
       cursor: $pointer-cursor;
       color: $lighterPink-color;
       transition: $transition;
       background-color: $blue-color;
       padding: 0rem 0.2rem;
+      z-index: 1;
       & span {
         font-size: 1.3rem;
       }
@@ -100,7 +121,7 @@
   .allDayWrapper {
     @include flexRow($gap: 1rem, $justifyContent: space-between);
     background-color: $pink-color;
-    padding: 0.7rem 1rem;
+    padding: 0.6rem 0.7rem;
     .allDayText {
       font-family: $spacemono;
       font-size: 0.8rem;
@@ -117,6 +138,11 @@
         font-size: 0.8rem;
         flex: 1;
         min-width: fit-content;
+        cursor: $pointer-cursor;
+        transition: $transition;
+        &:hover {
+          background-color: $lightBlue-color;
+        }
       }
     }
   }
@@ -140,8 +166,13 @@
           box-sizing: border-box;
           z-index: 1;
           border-left: 5px solid $blue-color;
+          // box-shadow: $box-shadow;
+          cursor: $pointer-cursor;
+          transition: $transition;
+          &:hover {
+            border-color: $pink-color;
+          }
           .eventText {
-            padding: 0.3rem 0.6rem 0.4rem;
             max-height: 100%;
             .eventTitle {
               font-size: 0.9rem;
@@ -181,17 +212,22 @@
   }
 }
 
+@media (min-width: 1700px) {
+  .calendarPage {
+    .days > * {
+      min-height: 7rem;
+    }
+  }
+}
+
 @media (max-width: 1200px) {
   .calendarPage {
     .days {
       flex: 1;
-      &.singleDayDisplay > .day {
-        font-size: 1rem;
-      }
-      .day:hover span,
-      .day.selected span {
-        width: 2.9rem;
-        height: 2.9em;
+      &.daysDisplay {
+        .day {
+          font-size: 1.3rem;
+        }
       }
     }
   }
@@ -200,6 +236,9 @@
 @media (max-width: 767px) {
   .calendarPage {
     .calendarHeader {
+      & > * {
+        padding: 0.6rem;
+      }
       .material-icons {
         font-size: 1.7rem;
       }
@@ -208,18 +247,22 @@
       }
     }
     .days {
-      &.singleDayDisplay > .day {
-        font-size: 0.8rem;
+      &.daysDisplay {
+        .day span {
+          width: 2.2rem;
+          height: 2.2rem;
+        }
       }
-      .day:hover span,
-      .day.selected span {
-        width: 2.5rem;
-        height: 2.5rem;
+      & > * {
+        min-height: 4.2rem;
+      }
+      .day {
+        font-size: 0.8rem !important;
       }
       .nextWeek,
       .prevWeek {
-        min-height: 1.8rem;
-        top: -18%;
+        min-height: 1.6rem;
+        top: -20%;
       }
       .nextWeek {
         border-top-left-radius: $border-radius;
@@ -241,10 +284,10 @@
     .daysTitle {
       .dayTitle {
         padding: 1rem 0.8rem;
+        font-size: 0.8rem;
       }
     }
     .allDayWrapper {
-      padding: 0.7rem;
       .allDayText {
         font-size: 0.65rem;
       }

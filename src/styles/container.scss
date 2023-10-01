@@ -1,18 +1,17 @@
 .calendarPage {
   height: 100vh;
-  padding: 2.2rem 0 3rem;
   box-sizing: border-box;
   .container {
     display: flex;
     flex-direction: column;
     max-height: 100%;
-    width: 1000px;
-    border-radius: $border-radius;
+    height: 100%;
+    width: 100%;
     margin: 0 auto;
     box-shadow: $box-shadow-no-top;
     overflow: hidden;
     .actionsBar {
-      background-color: $lightBlue-color;
+      background-color: $lilac-color;
       border-bottom: 2px solid $blue-color;
       padding: 0 0.5rem;
       @include flexRow($gap: 0.7rem, $justifyContent: space-between);
@@ -22,35 +21,43 @@
       button {
         @include calendarButton(
           $color: $blue-color,
-          $background: $lightBlue-color,
+          $background: $lilac-color,
           $hoverColor: $lighterPink-color
         );
         padding: 0.8rem 0.7rem;
         @include flexRow();
         .material-icons {
-          font-size: 1.6rem;
+          font-size: 1.8rem;
         }
       }
       .goBack {
         @include flexRow($gap: 0.7rem, $justifyContent: flex-start);
         .text {
-          font-size: 1rem;
+          font-size: 1.1rem;
         }
       }
     }
   }
 }
 
-@media (max-width: 1200px) {
+@media (min-width: 1700px) {
   .calendarPage {
-    padding: 0;
+    padding: 2.2rem 0 3rem;
     .container {
-      height: 100%;
-      width: 100%;
-      border-radius: 0;
+      width: 1500px;
+      height: unset;
+      border-radius: $border-radius;
+      .actionsBar {
+        background-color: $lightBlue-color;
+        button {
+          background-color: $lightBlue-color;
+          border: $lightBlue-color;
+        }
+      }
     }
   }
 }
+
 @media (max-width: 767px) {
   .calendarPage {
     .container {
@@ -62,12 +69,12 @@
         button {
           padding: 0.7rem 0.5rem;
           .material-icons {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
           }
         }
         .goBack {
           .text {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
           }
         }
       }

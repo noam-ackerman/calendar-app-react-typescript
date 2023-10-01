@@ -1,14 +1,32 @@
-import { startOfMonth, endOfMonth, differenceInDays, setDate } from "date-fns";
+import { useMemo } from "react";
+import {
+  startOfMonth,
+  endOfMonth,
+  differenceInDays,
+  setDate,
+  isSameMonth,
+} from "date-fns";
 import { useCalendarCtx } from "../../ctx/calendarCtx";
 
 export default function DaysDisplay(): JSX.Element {
-  const { currentDate, setCurrentDate, setSingleDayDisplay } = useCalendarCtx();
+  const { currentDate, setCurrentDate, setSingleDayDisplay, userEvents } =
+    useCalendarCtx();
   const startDate = startOfMonth(currentDate);
   const endDate = endOfMonth(currentDate);
   const numDays = differenceInDays(endDate, startDate) + 1;
   const prefixDays = startDate.getDay();
   const suffixDays = 6 - endDate.getDay();
   const selectedDate = currentDate.getDate();
+
+  const monthlyEvents = useMemo(
+    () =>
+      userEvents.filter(
+        (event) =>
+          isSameMonth(currentDate, event.starting) ||
+          isSameMonth(currentDate, event.ending)
+      ),
+    [userEvents, currentDate]
+  );
 
   const handleDayClick = (index: number) => {
     const date = setDate(currentDate, index);
@@ -24,6 +42,12 @@ export default function DaysDisplay(): JSX.Element {
       })}
       {Array.from({ length: numDays }).map((_, index) => {
         const date = index + 1;
+        const hasEvent = monthlyEvents.some(
+          (event) =>
+            event.starting.getDate() === date ||
+            event.ending.getDate() === date ||
+            (event.starting.getDate() <= date && event.ending.getDate() >= date)
+        );
         return (
           <div
             className={`day ${selectedDate === date ? "selected" : ""}`}
@@ -31,6 +55,12 @@ export default function DaysDisplay(): JSX.Element {
             onClick={() => handleDayClick(date)}
           >
             <span>{date}</span>
+            <div
+              className="hasEvent"
+              style={{ opacity: `${hasEvent ? "1" : "0"}` }}
+            >
+              ♥
+            </div>
           </div>
         );
       })}
