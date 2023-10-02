@@ -54,7 +54,12 @@ const CalendarContextProvider = ({ children }: ChildrenProps): JSX.Element => {
         let data = snapshot.val();
         if (data) {
           data = Object.values(data);
-          data = data.map((event: Event) => formatEventDates(event));
+          data = data
+            .map((event: Event) => formatEventDates(event))
+            .sort(
+              (a: Event, b: Event) =>
+                a.starting.getTime() - b.starting.getTime()
+            );
           setUserEvents(data);
         } else {
           setUserEvents([]);

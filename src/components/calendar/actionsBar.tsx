@@ -24,40 +24,49 @@ export default function ActionsBar(): JSX.Element {
       alert("Failed to log out!");
     }
   };
+
   return (
     <div className="actionsBar">
       <div className="returnButtons">
-        {currentEvent && !eventFormOpen && (
+        {currentEvent && !eventFormOpen ? (
+          // case when display of current event details
           <button className="goBack" onClick={() => setCurrentEvent(null)}>
             <span className="material-icons">arrow_back</span>{" "}
             <span className="text">{format(currentDate, "dd MMM yy")}</span>
           </button>
-        )}
-        {eventFormOpen && !currentEvent && (
+        ) : singleDayDisplay && !currentEvent && eventFormOpen ? (
+          // case when display of add event redirected from a single day calender
           <button className="goBack" onClick={() => setEventFormOpen(false)}>
             <span className="material-icons">arrow_back</span>{" "}
-            <span className="text">calendar</span>
+            <span className="text">{format(currentDate, "dd MMM yy")}</span>
           </button>
-        )}
-        {currentEvent && eventFormOpen && (
+        ) : currentEvent && eventFormOpen ? (
+          // case when display of edit event redirected from an event details page
           <button className="goBack" onClick={() => setEventFormOpen(false)}>
             <span className="material-icons">arrow_back</span>{" "}
             <span className="text">{currentEvent.title}</span>
           </button>
-        )}
-        {singleDayDisplay && !currentEvent && (
+        ) : singleDayDisplay && !currentEvent && !eventFormOpen ? (
+          // case when display of single day calender
           <button className="goBack" onClick={() => setSingleDayDisplay(false)}>
             <span className="material-icons">arrow_back</span>{" "}
             <span className="text">{format(currentDate, "MMM yy")}</span>
           </button>
-        )}
+        ) : eventFormOpen && !currentEvent && !singleDayDisplay ? (
+          // case when display of add event redirected from monthly calender
+          <button className="goBack" onClick={() => setEventFormOpen(false)}>
+            <span className="material-icons">arrow_back</span>{" "}
+            <span className="text">calendar</span>
+          </button>
+        ) : null}
       </div>
       <div className="actionsButtons">
         <button
+          disabled={eventFormOpen}
           className="addEvent"
           onClick={() => {
+            currentEvent && setCurrentEvent(null);
             setEventFormOpen(true);
-            singleDayDisplay && setSingleDayDisplay(false);
           }}
         >
           <span className="material-icons">add</span>

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { useCalendarCtx } from "../../ctx/calendarCtx";
 import { format } from "date-fns";
 import { OvalBtn } from "../../utils/spinners";
@@ -15,7 +15,6 @@ export default function EventDetails(): JSX.Element {
     if (!deleteClickedOnce) {
       setError("");
       setDeleteClickedOnce(true);
-      return;
     } else {
       setLoading(true);
       setDeleteClickedOnce(false);
@@ -29,6 +28,24 @@ export default function EventDetails(): JSX.Element {
       }
     }
   };
+
+  const handleDocumentClick = useCallback(
+    (e: MouseEvent) => {
+      if (
+        deleteClickedOnce &&
+        (e.target as Element) !== deleteEventBtn.current &&
+        !deleteEventBtn.current?.contains(e.target as Element)
+      ) {
+        setDeleteClickedOnce(false);
+      }
+    },
+    [deleteClickedOnce]
+  );
+
+  useEffect(() => {
+    document.addEventListener("click", handleDocumentClick);
+    return () => document.removeEventListener("click", handleDocumentClick);
+  }, [handleDocumentClick]);
 
   return (
     <div className="eventComponentWrapper">

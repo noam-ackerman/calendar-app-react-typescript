@@ -5,9 +5,15 @@ interface Props {
   event: Event;
   top: number;
   height: number;
+  width?: string;
 }
 
-export default function EventBlock({ event, top, height }: Props): JSX.Element {
+export default function EventBlock({
+  event,
+  top,
+  height,
+  width,
+}: Props): JSX.Element {
   const { setCurrentEvent } = useCalendarCtx();
   return (
     <div
@@ -15,14 +21,18 @@ export default function EventBlock({ event, top, height }: Props): JSX.Element {
       onClick={() => {
         setCurrentEvent(event);
       }}
-      style={{ top: `${top}%`, height: `calc(${height}% - 1px)` }}
+      style={{
+        top: `calc(${top}% + 1px)`,
+        height: `calc(${height}% - 1px)`,
+        width: width,
+      }}
     >
       <div
         className="eventText"
         style={{
-          display: `${height < 16.5 ? "none" : "block"}`,
+          display: `${height < 0.35 ? "none" : "block"}`,
           padding: `${
-            height > 16.5 && height < 16.7 ? "0 0.6rem" : "0.4rem 0.6rem"
+            height > 0.68 && height < 0.7 ? "0 0.6rem" : "0.4rem 0.6rem 0.3rem"
           }`,
         }}
       >

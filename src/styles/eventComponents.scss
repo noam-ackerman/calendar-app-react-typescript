@@ -39,7 +39,7 @@
     }
     .deleteEvent {
       @include primaryButton(
-        $color: #000,
+        $color: $blue-color,
         $background: $lightRed-color,
         $hoverBackground: $lighterRed-color
       );

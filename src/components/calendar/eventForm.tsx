@@ -15,6 +15,7 @@ import enGB from "date-fns/locale/en-GB";
 
 export default function EventForm(): JSX.Element {
   const {
+    currentDate,
     setCurrentDate,
     setSingleDayDisplay,
     setEventFormOpen,
@@ -22,8 +23,12 @@ export default function EventForm(): JSX.Element {
     currentEvent,
     setCurrentEvent,
   } = useCalendarCtx();
+
   const [dateStart, setDateStart] = useState<Date | null>(
-    currentEvent?.starting || roundToNearest5(new Date())
+    currentEvent?.starting ||
+      (currentDate.toDateString() === new Date().toDateString()
+        ? roundToNearest5(new Date())
+        : roundToNearest5(currentDate))
   );
   const [dateEnd, setDateEnd] = useState<Date | null>(
     currentEvent?.ending || add(dateStart!, { hours: 1 })
@@ -88,7 +93,6 @@ export default function EventForm(): JSX.Element {
             {allDay ? (
               <MobileDatePicker
                 value={dateStart}
-                minDate={new Date()}
                 onError={(err) =>
                   err ? setErrorPickers(true) : setErrorPickers(false)
                 }
@@ -97,7 +101,6 @@ export default function EventForm(): JSX.Element {
             ) : (
               <MobileDateTimePicker
                 value={dateStart}
-                minDateTime={new Date()}
                 minutesStep={5}
                 onError={(err) =>
                   err ? setErrorPickers(true) : setErrorPickers(false)

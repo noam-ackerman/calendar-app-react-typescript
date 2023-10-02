@@ -5,6 +5,7 @@ const daysWeek: string[] = ["S", "M", "T", "W", "T", "F", "S"];
 
 const hours: string[] = [
   "00",
+  "01",
   "02",
   "03",
   "04",

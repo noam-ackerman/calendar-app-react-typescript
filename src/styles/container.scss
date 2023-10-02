@@ -29,6 +29,11 @@
         .material-icons {
           font-size: 1.8rem;
         }
+        &:disabled {
+          pointer-events: none;
+          color: gray;
+          cursor: $default-cursor;
+        }
       }
       .goBack {
         @include flexRow($gap: 0.7rem, $justifyContent: flex-start);
