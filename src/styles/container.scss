@@ -1,5 +1,5 @@
 .calendarPage {
-  height: 100vh;
+  height: 100dvh;
   box-sizing: border-box;
   .container {
     display: flex;
@@ -39,6 +39,10 @@
         @include flexRow($gap: 0.7rem, $justifyContent: flex-start);
         .text {
           font-size: 1.1rem;
+          overflow: hidden;
+          max-width: 30ch;
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
       }
     }
@@ -80,6 +84,7 @@
         .goBack {
           .text {
             font-size: 0.8rem;
+            max-width: 15ch;
           }
         }
       }

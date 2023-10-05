@@ -65,4 +65,65 @@ const formatEventDates = (event: Event): Event => {
   };
 };
 
-export { roundToNearest5, daysWeek, hours, returnFullWeek, formatEventDates };
+const calculateEventBlockDimentions = (
+  event: Event,
+  prevEvent: Event,
+  index: number,
+  count: number,
+  currentDate: Date
+): { top: number; width: string; height: number; count: number } => {
+  let width = "100%";
+  let top = 0;
+  let height = 0;
+  //calculating width for handling overlaing events cases
+  if (
+    event.starting.getTime() < prevEvent?.ending.getTime() &&
+    event.starting.getTime() - prevEvent?.starting.getTime() >= 600000 &&
+    event.starting.getTime() > prevEvent?.starting.getTime()
+  ) {
+    width = `calc(100% - ${count}rem)`;
+    count += 0.7;
+  } else if (
+    event.starting.getTime() === prevEvent?.starting.getTime() ||
+    (event.starting.getTime() - prevEvent?.starting.getTime() < 600000 &&
+      event.starting.getTime() < prevEvent?.ending.getTime())
+  ) {
+    width = `calc(100% - ${count + 1}rem)`;
+    count += 1.7;
+  }
+  //calculating top and height
+  if (
+    // case of starting that day
+    event.starting.toDateString() === currentDate.toDateString()
+  ) {
+    top =
+      (event.starting.getHours() / 24 + event.starting.getMinutes() / 1440) *
+      100;
+    const startingHourInDecimels =
+      event.starting.getMinutes() / 60 + event.starting.getHours();
+    const endingHourInDecimels =
+      event.starting.toDateString() === event.ending.toDateString()
+        ? event.ending.getMinutes() / 60 + event.ending.getHours()
+        : 24;
+    height = (endingHourInDecimels - startingHourInDecimels) * (100 / 24);
+  } else if (
+    // case of ending that day but starting before
+    event.starting.toDateString() !== currentDate.toDateString() &&
+    event.ending.toDateString() === currentDate.toDateString()
+  ) {
+    const endingHourInDecimels =
+      event.ending.getMinutes() / 60 + event.ending.getHours();
+    height = endingHourInDecimels * (100 / 24);
+  }
+
+  return { top, width, height, count };
+};
+
+export {
+  roundToNearest5,
+  daysWeek,
+  hours,
+  returnFullWeek,
+  formatEventDates,
+  calculateEventBlockDimentions,
+};

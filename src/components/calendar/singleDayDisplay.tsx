@@ -1,16 +1,13 @@
 import { useMemo } from "react";
-import { add, sub, isBefore, isAfter, startOfDay } from "date-fns";
-import { hours } from "../../utils/helpers";
+import { isBefore, isAfter, startOfDay } from "date-fns";
+import { hours, calculateEventBlockDimentions } from "../../utils/helpers";
 import { useCalendarCtx } from "../../ctx/calendarCtx";
-import { returnFullWeek } from "../../utils/helpers";
 import EventBlock from "./eventBlock";
+import WeekRow from "./weekRow";
 
 export default function SingleDayDisplay(): JSX.Element {
-  const { currentDate, setCurrentDate, userEvents, setCurrentEvent } =
-    useCalendarCtx();
-  const selectedDate = currentDate.getDate();
-  const week = returnFullWeek(currentDate);
-  let count = 0.7;
+  const { currentDate, userEvents, setCurrentEvent } = useCalendarCtx();
+  let widthCount: number = 0.7;
 
   const dayEvents = useMemo(() => {
     return userEvents.filter(
@@ -38,31 +35,9 @@ export default function SingleDayDisplay(): JSX.Element {
     [dayEvents, allDayEvent]
   );
 
-  const prevWeek = () => setCurrentDate(sub(currentDate, { weeks: 1 }));
-  const nextWeek = () => setCurrentDate(add(currentDate, { weeks: 1 }));
-
   return (
     <>
-      <div className="days singleDayDisplay">
-        <div className="prevWeek" onClick={prevWeek}>
-          <span className="material-icons">arrow_back</span>
-        </div>
-        <div className="nextWeek" onClick={nextWeek}>
-          <span className="material-icons">arrow_forward</span>
-        </div>
-        {week.map((date) => {
-          const day = date.getDate();
-          return (
-            <div
-              className={`day ${selectedDate === day ? "selected" : ""}`}
-              key={day}
-              onClick={() => setCurrentDate(date)}
-            >
-              <span>{day}</span>
-            </div>
-          );
-        })}
-      </div>
+      <WeekRow />
       {allDayEvent.length ? (
         <div className="allDayWrapper">
           <div className="allDayText">all-day</div>
@@ -92,55 +67,19 @@ export default function SingleDayDisplay(): JSX.Element {
           </div>
           <div className="boxes">
             {hours.map((_, i) => (
-              <div className="box"></div>
+              <div key={i} className="box"></div>
             ))}
             {notAllDayEvent.map((event, index, array) => {
               const prevEvent = array[index - 1];
-              let width = "100%";
-              let top = 0;
-              let height = 0;
-              if (
-                event.starting.getTime() < prevEvent?.ending.getTime() &&
-                event.starting.getTime() - prevEvent?.starting.getTime() >=
-                  600000 &&
-                event.starting.getTime() > prevEvent?.starting.getTime()
-              ) {
-                width = `calc(100% - ${count}rem)`;
-                count += 0.7;
-              } else if (
-                event.starting.getTime() === prevEvent?.starting.getTime() ||
-                (event.starting.getTime() - prevEvent?.starting.getTime() <
-                  600000 &&
-                  event.starting.getTime() < prevEvent?.ending.getTime())
-              ) {
-                width = `calc(100% - ${count + 1}rem)`;
-                count += 1.7;
-              }
-              if (
-                // case of starting that day
-                event.starting.toDateString() === currentDate.toDateString()
-              ) {
-                top =
-                  (event.starting.getHours() / 24 +
-                    event.starting.getMinutes() / 1440) *
-                  100;
-                const startingHourInDecimels =
-                  event.starting.getMinutes() / 60 + event.starting.getHours();
-                const endingHourInDecimels =
-                  event.starting.toDateString() === event.ending.toDateString()
-                    ? event.ending.getMinutes() / 60 + event.ending.getHours()
-                    : 24;
-                height =
-                  (endingHourInDecimels - startingHourInDecimels) * (100 / 24);
-              } else if (
-                // case of ending that day but starting before
-                event.starting.toDateString() !== currentDate.toDateString() &&
-                event.ending.toDateString() === currentDate.toDateString()
-              ) {
-                const endingHourInDecimels =
-                  event.ending.getMinutes() / 60 + event.ending.getHours();
-                height = endingHourInDecimels * (100 / 24);
-              }
+              const { top, width, height, count } =
+                calculateEventBlockDimentions(
+                  event,
+                  prevEvent,
+                  index,
+                  widthCount,
+                  currentDate
+                );
+              widthCount = count;
               return (
                 <EventBlock
                   key={event.id}

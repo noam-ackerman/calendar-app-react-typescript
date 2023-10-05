@@ -24,6 +24,7 @@ export default function EventForm(): JSX.Element {
     setCurrentEvent,
   } = useCalendarCtx();
 
+  const [allDay, setAllday] = useState<boolean>(currentEvent?.allDay || false);
   const [dateStart, setDateStart] = useState<Date | null>(
     currentEvent?.starting ||
       (currentDate.toDateString() === new Date().toDateString()
@@ -31,9 +32,9 @@ export default function EventForm(): JSX.Element {
         : roundToNearest5(currentDate))
   );
   const [dateEnd, setDateEnd] = useState<Date | null>(
-    currentEvent?.ending || add(dateStart!, { hours: 1 })
+    currentEvent?.ending ||
+      (!allDay ? add(dateStart!, { hours: 1 }) : dateStart)
   );
-  const [allDay, setAllday] = useState<boolean>(currentEvent?.allDay || false);
   const [errorPickers, setErrorPickers] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -50,8 +51,8 @@ export default function EventForm(): JSX.Element {
     setLoading(true);
     const newEvent: Event = {
       id: currentEvent?.id || uid(32),
-      starting: dateStart!,
-      ending: dateEnd!,
+      starting: allDay ? startOfDay(dateStart!) : dateStart!,
+      ending: allDay ? startOfDay(dateEnd!) : dateEnd!,
       allDay: allDay,
       title: eventTitle.current?.value ? eventTitle.current.value : "New Event",
     };
@@ -68,7 +69,7 @@ export default function EventForm(): JSX.Element {
   };
 
   return (
-    <div className="eventComponentWrapper">
+    <div className="actionsComponentWrapper">
       <form onSubmit={handleSubmit}>
         {error && <div className="error-message">{error}</div>}
         <div className="input-group">

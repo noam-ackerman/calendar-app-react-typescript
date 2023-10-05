@@ -8,9 +8,6 @@ import {
   update,
   onValue,
   remove,
-  // set,
-  // get,
-  // child,
 } from "firebase/database";
 
 const CalendarContext = React.createContext({} as CalendarContextType);

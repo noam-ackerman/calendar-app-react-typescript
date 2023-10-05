@@ -48,7 +48,7 @@ export default function EventDetails(): JSX.Element {
   }, [handleDocumentClick]);
 
   return (
-    <div className="eventComponentWrapper">
+    <div className="actionsComponentWrapper">
       <div className="title">Event Details</div>
       <div className="eventDetails">
         {error && <div className="error-message small">{error}</div>}
@@ -96,7 +96,7 @@ export default function EventDetails(): JSX.Element {
           className="deleteEvent"
         >
           {loading && <OvalBtn color="#3a86ff" />}
-          <span>{deleteClickedOnce ? "U Sure? Y" : "Delete"} </span>
+          <span>{deleteClickedOnce ? "Sure? Y" : "Delete"} </span>
         </button>
       </div>
     </div>

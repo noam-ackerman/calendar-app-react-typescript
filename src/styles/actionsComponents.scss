@@ -1,4 +1,4 @@
-.eventComponentWrapper {
+.actionsComponentWrapper {
   background-color: $lighterPink-color;
   flex: 1;
   padding: 2.5rem 3rem;
@@ -17,14 +17,16 @@
     color: #000;
     .eventTitle {
       background-color: $lightBlue-color;
-      padding: 0.05rem 0.4rem;
+      padding: 0.1rem 0.4rem;
       text-transform: capitalize;
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: bold;
       margin-bottom: 0.2rem;
+      line-height: 1.5;
+      border-radius: 1px;
     }
     .eventDate {
-      font-size: 1.05rem;
+      font-size: 1rem;
     }
   }
   .actions {
@@ -89,7 +91,7 @@
           border-radius: $border-radius;
           border: none;
           font-family: $roboto;
-          font-size: 0.9rem;
+          font-size: 1rem;
         }
       }
     }
@@ -104,8 +106,34 @@
   }
 }
 
+.MuiDialog-container .MuiPaper-root {
+  background-color: $lighterBlue-color;
+  border: 2px solid $blue-color;
+  width: min(400px, 100%);
+  .MuiPickersLayout-toolbar {
+    padding: 1.5rem;
+  }
+}
+
 @media (max-width: 767px) {
-  .eventComponentWrapper {
+  .actionsComponentWrapper {
     padding: 2rem;
+    .eventDetails {
+      .eventTitle {
+        font-size: 0.9rem;
+      }
+      .eventDate {
+        font-size: 0.8rem;
+      }
+    }
+    form {
+      .input-group {
+        &:not(.picker-group) {
+          input {
+            padding: 0.6rem;
+          }
+        }
+      }
+    }
   }
 }
