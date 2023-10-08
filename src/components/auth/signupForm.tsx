@@ -58,21 +58,17 @@ export default function SignupForm(): JSX.Element {
 
   return (
     <form onSubmit={onSubmit}>
-      {errors.email && (
+      {errors.email ? (
         <div className="error-message">{errors.email.message}</div>
-      )}
-      {!errors.email && errors.password && (
+      ) : errors.password ? (
         <div className="error-message">{errors.password.message}</div>
-      )}
-      {!errors.email && !errors.password && errors.passwordConfirmation && (
+      ) : errors.passwordConfirmation ? (
         <div className="error-message">
           {errors.passwordConfirmation.message}
         </div>
-      )}
-      {!errors.email &&
-        !errors.password &&
-        !errors.passwordConfirmation &&
-        error && <div className="error-message">{error}</div>}
+      ) : error ? (
+        <div className="error-message">{error}</div>
+      ) : null}
       <div className="input-group">
         <label htmlFor="email">Email</label>
         <input

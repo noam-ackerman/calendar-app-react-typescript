@@ -1,6 +1,6 @@
 import { sub, add, format } from "date-fns";
-import { useCalendarCtx } from "../../ctx/calendarCtx";
-import { daysWeek } from "../../utils/helpers";
+import { useCalendarCtx } from "../../../ctx/calendarCtx";
+import { daysWeek } from "../../../utils/helpers";
 import DaysDisplay from "./daysDisplay";
 import SingleDayDisplay from "./singleDayDisplay";
 

@@ -1,6 +1,6 @@
-import { useCalendarCtx } from "../../ctx/calendarCtx";
+import { useCalendarCtx } from "../../../ctx/calendarCtx";
 import { add, sub } from "date-fns";
-import { returnFullWeek } from "../../utils/helpers";
+import { returnFullWeek } from "../../../utils/helpers";
 
 export default function WeekRow(): JSX.Element {
   const { currentDate, setCurrentDate } = useCalendarCtx();

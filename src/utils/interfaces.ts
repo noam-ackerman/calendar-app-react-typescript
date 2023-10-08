@@ -17,6 +17,12 @@ export interface ResetPasswordFormData {
   email: string;
 }
 
+export interface ChangePasswordFormData {
+  password: string;
+  newPassword: string;
+  newPasswordConfirmation: string;
+}
+
 export interface ChildrenProps {
   children: React.ReactNode;
 }
@@ -27,6 +33,9 @@ export interface AuthContextType {
   LoginUser: (email: string, password: string) => Promise<UserCredential>;
   LogoutUser: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
+  UpdatePassword: (password: string) => Promise<void>;
+  reAuthenticateUser: (providedPassword: string) => Promise<UserCredential>;
+  DeleteUser: () => Promise<void>;
 }
 
 export interface CalendarContextType {
@@ -42,6 +51,9 @@ export interface CalendarContextType {
   currentEvent: Event | null;
   setCurrentEvent: Dispatch<SetStateAction<Event | null>>;
   deleteEvent: () => Promise<void>;
+  settingsOpen: boolean;
+  setSettingsOpen: Dispatch<SetStateAction<boolean>>;
+  deleteUserDatabase: (userId: string) => Promise<void>;
 }
 
 export interface Event {

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { isBefore, isAfter, startOfDay } from "date-fns";
-import { hours, calculateEventBlockDimentions } from "../../utils/helpers";
-import { useCalendarCtx } from "../../ctx/calendarCtx";
+import { hours, calculateEventBlockDimentions } from "../../../utils/helpers";
+import { useCalendarCtx } from "../../../ctx/calendarCtx";
 import EventBlock from "./eventBlock";
 import WeekRow from "./weekRow";
 

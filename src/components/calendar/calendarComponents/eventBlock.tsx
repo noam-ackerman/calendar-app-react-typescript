@@ -1,5 +1,5 @@
-import { Event } from "../../utils/interfaces";
-import { useCalendarCtx } from "../../ctx/calendarCtx";
+import { Event } from "../../../utils/interfaces";
+import { useCalendarCtx } from "../../../ctx/calendarCtx";
 
 interface Props {
   event: Event;

@@ -1,4 +1,4 @@
-.actionsComponentWrapper {
+.menuComponentWrapper {
   background-color: $lighterPink-color;
   flex: 1;
   padding: 2.5rem 3rem;
@@ -39,7 +39,7 @@
         $hoverBackground: $lighterBlue-color
       );
     }
-    .deleteEvent {
+    .deleteBtn {
       @include primaryButton(
         $color: $blue-color,
         $background: $lightRed-color,
@@ -54,6 +54,11 @@
     &.small {
       width: fit-content;
     }
+  }
+  .success-message {
+    @include messegeTheme($theme: $green-color);
+    width: 25em;
+    max-width: 100%;
   }
 
   form {
@@ -101,7 +106,6 @@
         $background: $lightBlue-color,
         $hoverBackground: $lighterBlue-color
       );
-      margin: 1rem 0 0.5rem;
     }
   }
 }
@@ -125,6 +129,9 @@
       .eventDate {
         font-size: 0.8rem;
       }
+    }
+    .title {
+      font-size: 1.7rem;
     }
     form {
       .input-group {

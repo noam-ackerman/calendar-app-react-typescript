@@ -41,13 +41,13 @@ export default function ResetPassword(): JSX.Element {
 
   return (
     <form onSubmit={onSubmit}>
-      {errors.email && (
+      {errors.email ? (
         <div className="error-message">{errors.email.message}</div>
-      )}
-      {!errors.email && error && <div className="error-message">{error}</div>}
-      {!errors.email && !error && message && (
+      ) : error ? (
+        <div className="error-message">{error}</div>
+      ) : message ? (
         <div className="success-message">{message}</div>
-      )}
+      ) : null}
       <div className="input-group">
         <label htmlFor="email">Email</label>
         <input

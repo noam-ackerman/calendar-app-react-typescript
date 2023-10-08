@@ -1,14 +1,14 @@
 // import { useCalendarCtx } from "../../ctx/calendarCtx";
 import { useState, useEffect, useRef } from "react";
 import { add, startOfDay } from "date-fns";
-import { useCalendarCtx } from "../../ctx/calendarCtx";
+import { useCalendarCtx } from "../../../ctx/calendarCtx";
 import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { Event } from "../../utils/interfaces";
-import { roundToNearest5 } from "../../utils/helpers";
-import { OvalBtn } from "../../utils/spinners";
+import { Event } from "../../../utils/interfaces";
+import { roundToNearest5 } from "../../../utils/helpers";
+import { OvalBtn } from "../../../utils/spinners";
 import { uid } from "uid";
 import Switch from "@mui/material/Switch";
 import enGB from "date-fns/locale/en-GB";
@@ -69,8 +69,9 @@ export default function EventForm(): JSX.Element {
   };
 
   return (
-    <div className="actionsComponentWrapper">
+    <div className="menuComponentWrapper">
       <form onSubmit={handleSubmit}>
+        <div className="title">{currentEvent ? "Edit Event" : "New Event"}</div>
         {error && <div className="error-message">{error}</div>}
         <div className="input-group">
           <label htmlFor="eventTitle">Event title</label>
@@ -134,14 +135,16 @@ export default function EventForm(): JSX.Element {
             )}
           </div>
         </LocalizationProvider>
-        <button
-          disabled={errorPickers || loading}
-          className={`submitBtn ${errorPickers ? "error-disabled" : ""}`}
-          type="submit"
-        >
-          {loading && <OvalBtn color="#3a86ff" />}
-          <span>{currentEvent ? "Save Changes" : "Add Event"}</span>
-        </button>
+        <div className="actions">
+          <button
+            disabled={errorPickers || loading}
+            className={`submitBtn ${errorPickers ? "error-disabled" : ""}`}
+            type="submit"
+          >
+            {loading && <OvalBtn color="#3a86ff" />}
+            <span>{currentEvent ? "Save Changes" : "Add Event"}</span>
+          </button>
+        </div>
       </form>
     </div>
   );

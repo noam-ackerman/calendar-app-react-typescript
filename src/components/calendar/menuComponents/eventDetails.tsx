@@ -1,15 +1,18 @@
-import { useState, useRef, useCallback, useEffect } from "react";
-import { useCalendarCtx } from "../../ctx/calendarCtx";
+import { useState, useRef } from "react";
+import { useCalendarCtx } from "../../../ctx/calendarCtx";
 import { format } from "date-fns";
-import { OvalBtn } from "../../utils/spinners";
+import { OvalBtn } from "../../../utils/spinners";
+import useToggleBtnClick from "../../../utils/custom-hooks/ useToggleBtnClick";
 
 export default function EventDetails(): JSX.Element {
   const { currentEvent, setCurrentEvent, setEventFormOpen, deleteEvent } =
     useCalendarCtx();
-  const [deleteClickedOnce, setDeleteClickedOnce] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const deleteEventBtn = useRef<HTMLButtonElement>(null);
+  const [deleteClickedOnce, setDeleteClickedOnce] = useToggleBtnClick(
+    deleteEventBtn?.current
+  );
 
   const handleDeleteEvent = async () => {
     if (!deleteClickedOnce) {
@@ -29,26 +32,8 @@ export default function EventDetails(): JSX.Element {
     }
   };
 
-  const handleDocumentClick = useCallback(
-    (e: MouseEvent) => {
-      if (
-        deleteClickedOnce &&
-        (e.target as Element) !== deleteEventBtn.current &&
-        !deleteEventBtn.current?.contains(e.target as Element)
-      ) {
-        setDeleteClickedOnce(false);
-      }
-    },
-    [deleteClickedOnce]
-  );
-
-  useEffect(() => {
-    document.addEventListener("click", handleDocumentClick);
-    return () => document.removeEventListener("click", handleDocumentClick);
-  }, [handleDocumentClick]);
-
   return (
-    <div className="actionsComponentWrapper">
+    <div className="menuComponentWrapper">
       <div className="title">Event Details</div>
       <div className="eventDetails">
         {error && <div className="error-message small">{error}</div>}
@@ -93,7 +78,7 @@ export default function EventDetails(): JSX.Element {
           disabled={loading}
           ref={deleteEventBtn}
           onClick={handleDeleteEvent}
-          className="deleteEvent"
+          className="deleteBtn"
         >
           {loading && <OvalBtn color="#3a86ff" />}
           <span>{deleteClickedOnce ? "Sure? Y" : "Delete"} </span>

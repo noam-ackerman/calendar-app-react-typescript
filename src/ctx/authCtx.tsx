@@ -6,6 +6,10 @@ import {
   signInWithEmailAndPassword,
   signOut,
   sendPasswordResetEmail,
+  updatePassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+  deleteUser,
 } from "firebase/auth";
 import { CurrentUserType } from "../utils/types";
 import { AuthContextType, ChildrenProps } from "../utils/interfaces";
@@ -36,6 +40,21 @@ const AuthContextProvider = ({ children }: ChildrenProps): JSX.Element => {
   function resetPassword(email: string) {
     return sendPasswordResetEmail(auth, email);
   }
+  function UpdatePassword(password: string) {
+    return updatePassword(currentUser!, password);
+  }
+
+  function reAuthenticateUser(providedPassword: string) {
+    const credentials = EmailAuthProvider.credential(
+      currentUser!.email!,
+      providedPassword
+    );
+    return reauthenticateWithCredential(currentUser!, credentials);
+  }
+
+  function DeleteUser() {
+    return deleteUser(currentUser!);
+  }
 
   const ContextValue = {
     currentUser,
@@ -43,6 +62,9 @@ const AuthContextProvider = ({ children }: ChildrenProps): JSX.Element => {
     LoginUser,
     LogoutUser,
     resetPassword,
+    UpdatePassword,
+    reAuthenticateUser,
+    DeleteUser,
   };
 
   useEffect(() => {

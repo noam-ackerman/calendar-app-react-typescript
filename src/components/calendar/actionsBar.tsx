@@ -13,6 +13,8 @@ export default function ActionsBar(): JSX.Element {
     setSingleDayDisplay,
     currentEvent,
     setCurrentEvent,
+    settingsOpen,
+    setSettingsOpen,
   } = useCalendarCtx();
   const navigate = useNavigate();
 
@@ -28,9 +30,17 @@ export default function ActionsBar(): JSX.Element {
   return (
     <div className="actionsBar">
       <div className="returnButtons">
-        {currentEvent && !eventFormOpen ? (
-          // case when display of current event details
-          <button className="goBack" onClick={() => setCurrentEvent(null)}>
+        {(currentEvent || settingsOpen) &&
+        singleDayDisplay &&
+        !eventFormOpen ? (
+          // case when display of current event details / settings resirected from single day display
+          <button
+            className="goBack"
+            onClick={() => {
+              currentEvent && setCurrentEvent(null);
+              settingsOpen && setSettingsOpen(false);
+            }}
+          >
             <span className="material-icons">arrow_back</span>{" "}
             <span className="text">{format(currentDate, "dd MMM yy")}</span>
           </button>
@@ -52,9 +62,17 @@ export default function ActionsBar(): JSX.Element {
             <span className="material-icons">arrow_back</span>{" "}
             <span className="text">{format(currentDate, "MMM yy")}</span>
           </button>
-        ) : eventFormOpen && !currentEvent && !singleDayDisplay ? (
-          // case when display of add event redirected from monthly calender
-          <button className="goBack" onClick={() => setEventFormOpen(false)}>
+        ) : (eventFormOpen || settingsOpen) &&
+          !currentEvent &&
+          !singleDayDisplay ? (
+          // case when display of add event / settings redirected from monthly calender
+          <button
+            className="goBack"
+            onClick={() => {
+              eventFormOpen && setEventFormOpen(false);
+              settingsOpen && setSettingsOpen(false);
+            }}
+          >
             <span className="material-icons">arrow_back</span>{" "}
             <span className="text">calendar</span>
           </button>
@@ -65,13 +83,21 @@ export default function ActionsBar(): JSX.Element {
           disabled={eventFormOpen}
           className="addEvent"
           onClick={() => {
+            settingsOpen && setSettingsOpen(false);
             currentEvent && setCurrentEvent(null);
             setEventFormOpen(true);
           }}
         >
           <span className="material-icons">add</span>
         </button>
-        <button className="settings">
+        <button
+          className="settings"
+          onClick={() => {
+            eventFormOpen && setEventFormOpen(false);
+            currentEvent && setCurrentEvent(null);
+            setSettingsOpen(true);
+          }}
+        >
           <span className="material-icons">settings</span>
         </button>
         <button className="logout" onClick={handleLogout}>

@@ -22,6 +22,7 @@ const CalendarContextProvider = ({ children }: ChildrenProps): JSX.Element => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [singleDayDisplay, setSingleDayDisplay] = useState<boolean>(false);
   const [eventFormOpen, setEventFormOpen] = useState<boolean>(false);
+  const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
   const [currentEvent, setCurrentEvent] = useState<Event | null>(null);
   const [userEvents, setUserEvents] = useState<Event[]>([]);
 
@@ -39,6 +40,11 @@ const CalendarContextProvider = ({ children }: ChildrenProps): JSX.Element => {
       "users/" + currentUser!.uid + "/events/" + currentEvent!.id
     );
     return remove(eventRef);
+  }
+
+  function deleteUserDatabase(userId: string) {
+    const userRef = databaseRef(database, "users/" + userId);
+    return remove(userRef);
   }
 
   React.useEffect(() => {
@@ -63,6 +69,11 @@ const CalendarContextProvider = ({ children }: ChildrenProps): JSX.Element => {
         }
       });
     } else if (!currentUser) {
+      setCurrentDate(new Date());
+      setSingleDayDisplay(false);
+      setEventFormOpen(false);
+      setSettingsOpen(false);
+      setCurrentEvent(null);
       setUserEvents([]);
     }
   }, [currentUser]);
@@ -80,6 +91,9 @@ const CalendarContextProvider = ({ children }: ChildrenProps): JSX.Element => {
     currentEvent,
     setCurrentEvent,
     deleteEvent,
+    settingsOpen,
+    setSettingsOpen,
+    deleteUserDatabase,
   };
   return (
     <CalendarContext.Provider value={ContextValue}>

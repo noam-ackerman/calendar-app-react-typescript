@@ -6,7 +6,7 @@ import {
   setDate,
   isSameMonth,
 } from "date-fns";
-import { useCalendarCtx } from "../../ctx/calendarCtx";
+import { useCalendarCtx } from "../../../ctx/calendarCtx";
 
 export default function DaysDisplay(): JSX.Element {
   const { currentDate, setCurrentDate, setSingleDayDisplay, userEvents } =
