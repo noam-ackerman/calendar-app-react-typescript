@@ -2,6 +2,7 @@ import { useAuth } from "../../ctx/authCtx";
 import { useNavigate } from "react-router-dom";
 import { useCalendarCtx } from "../../ctx/calendarCtx";
 import { format } from "date-fns";
+import ReturnBtn from "./returnBtn";
 
 export default function ActionsBar(): JSX.Element {
   const { LogoutUser } = useAuth();
@@ -34,48 +35,42 @@ export default function ActionsBar(): JSX.Element {
         singleDayDisplay &&
         !eventFormOpen ? (
           // case when display of current event details / settings resirected from single day display
-          <button
-            className="goBack"
+          <ReturnBtn
             onClick={() => {
               currentEvent && setCurrentEvent(null);
               settingsOpen && setSettingsOpen(false);
             }}
-          >
-            <span className="material-icons">arrow_back</span>{" "}
-            <span className="text">{format(currentDate, "dd MMM yy")}</span>
-          </button>
+            text={format(currentDate, "dd MMM yy")}
+          />
         ) : singleDayDisplay && !currentEvent && eventFormOpen ? (
           // case when display of add event redirected from a single day calender
-          <button className="goBack" onClick={() => setEventFormOpen(false)}>
-            <span className="material-icons">arrow_back</span>{" "}
-            <span className="text">{format(currentDate, "dd MMM yy")}</span>
-          </button>
+          <ReturnBtn
+            onClick={() => setEventFormOpen(false)}
+            text={format(currentDate, "dd MMM yy")}
+          />
         ) : currentEvent && eventFormOpen ? (
           // case when display of edit event redirected from an event details page
-          <button className="goBack" onClick={() => setEventFormOpen(false)}>
-            <span className="material-icons">arrow_back</span>{" "}
-            <span className="text">{currentEvent.title}</span>
-          </button>
+          <ReturnBtn
+            onClick={() => setEventFormOpen(false)}
+            text={currentEvent.title}
+          />
         ) : singleDayDisplay && !currentEvent && !eventFormOpen ? (
           // case when display of single day calender
-          <button className="goBack" onClick={() => setSingleDayDisplay(false)}>
-            <span className="material-icons">arrow_back</span>{" "}
-            <span className="text">{format(currentDate, "MMM yy")}</span>
-          </button>
+          <ReturnBtn
+            onClick={() => setSingleDayDisplay(false)}
+            text={format(currentDate, "MMM yy")}
+          />
         ) : (eventFormOpen || settingsOpen) &&
           !currentEvent &&
           !singleDayDisplay ? (
           // case when display of add event / settings redirected from monthly calender
-          <button
-            className="goBack"
+          <ReturnBtn
             onClick={() => {
               eventFormOpen && setEventFormOpen(false);
               settingsOpen && setSettingsOpen(false);
             }}
-          >
-            <span className="material-icons">arrow_back</span>{" "}
-            <span className="text">calendar</span>
-          </button>
+            text="calendar"
+          />
         ) : null}
       </div>
       <div className="actionsButtons">
