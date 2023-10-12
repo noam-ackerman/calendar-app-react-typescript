@@ -17,6 +17,9 @@ export default function DaysDisplay(): JSX.Element {
   const prefixDays: number = startDate.getDay();
   const suffixDays: number = 6 - endDate.getDay();
   const selectedDate: number = currentDate.getDate();
+  const today = isSameMonth(new Date(), currentDate)
+    ? new Date().getDate()
+    : null;
 
   const monthlyEvents = useMemo(
     () =>
@@ -50,7 +53,9 @@ export default function DaysDisplay(): JSX.Element {
         );
         return (
           <div
-            className={`day ${selectedDate === date ? "selected" : ""}`}
+            className={`day ${selectedDate === date ? "selected" : ""} ${
+              today === date ? "today" : ""
+            }`}
             key={date}
             onClick={() => handleDayClick(date)}
           >

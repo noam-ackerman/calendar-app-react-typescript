@@ -90,6 +90,10 @@
       &.selected span {
         @include daySelection();
       }
+      &.today span {
+        color: $blue-color;
+        font-weight: bold;
+      }
       &:hover span {
         @include daySelection();
       }
