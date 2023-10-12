@@ -5,6 +5,7 @@ import {
   differenceInDays,
   setDate,
   isSameMonth,
+  startOfDay,
 } from "date-fns";
 import { useCalendarCtx } from "../../../ctx/calendarCtx";
 
@@ -33,7 +34,7 @@ export default function DaysDisplay(): JSX.Element {
 
   const handleDayClick = (index: number): void => {
     const date = setDate(currentDate, index);
-    setCurrentDate(date);
+    setCurrentDate(startOfDay(date));
     setSingleDayDisplay(true);
   };
 
