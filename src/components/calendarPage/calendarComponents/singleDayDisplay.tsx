@@ -75,7 +75,6 @@ export default function SingleDayDisplay(): JSX.Element {
                 calculateEventBlockDimentions(
                   event,
                   prevEvent,
-                  index,
                   widthCount,
                   currentDate
                 );

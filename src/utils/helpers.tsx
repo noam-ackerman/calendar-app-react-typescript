@@ -68,24 +68,25 @@ const formatEventDates = (event: Event): Event => {
 const calculateEventBlockDimentions = (
   event: Event,
   prevEvent: Event,
-  index: number,
   count: number,
   currentDate: Date
 ): { top: number; width: string; height: number; count: number } => {
   let width = "100%";
   let top = 0;
   let height = 0;
-  //calculating width for handling overlaing events cases
+  //calculating width for handling overlaying events cases
   if (
+    //if event overlaying wtih previous with gap above 10 minutes
     event.starting.getTime() < prevEvent?.ending.getTime() &&
-    event.starting.getTime() - prevEvent?.starting.getTime() >= 600000 &&
+    event.starting.getTime() - prevEvent?.starting.getTime() > 600000 &&
     event.starting.getTime() > prevEvent?.starting.getTime()
   ) {
     width = `calc(100% - ${count}rem)`;
     count += 0.7;
   } else if (
+    //if event overlaying wtih previous with gap below or equal to 10 minutes
     event.starting.getTime() === prevEvent?.starting.getTime() ||
-    (event.starting.getTime() - prevEvent?.starting.getTime() < 600000 &&
+    (event.starting.getTime() - prevEvent?.starting.getTime() <= 600000 &&
       event.starting.getTime() < prevEvent?.ending.getTime())
   ) {
     width = `calc(100% - ${count + 1}rem)`;
