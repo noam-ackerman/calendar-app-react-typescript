@@ -85,4 +85,4 @@ const AuthContextProvider = ({ children }: ChildrenProps): JSX.Element => {
   );
 };
 
-export { useAuth, AuthContextProvider };
+export { useAuth, AuthContextProvider, AuthContext };
