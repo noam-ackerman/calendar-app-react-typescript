@@ -1,7 +1,7 @@
 import { sub, add, format } from "date-fns";
 import { useCalendarCtx } from "../../../ctx/calendarCtx";
 import { daysWeek } from "../../../utils/helpers";
-import DaysDisplay from "./daysDisplay";
+import MonthDisplay from "./monthDisplay";
 import SingleDayDisplay from "./singleDayDisplay";
 
 const Calendar = (): JSX.Element => {
@@ -38,7 +38,7 @@ const Calendar = (): JSX.Element => {
           </div>
         ))}
       </div>
-      {singleDayDisplay ? <SingleDayDisplay /> : <DaysDisplay />}
+      {singleDayDisplay ? <SingleDayDisplay /> : <MonthDisplay />}
     </>
   );
 };

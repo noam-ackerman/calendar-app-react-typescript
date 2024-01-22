@@ -9,7 +9,7 @@ import {
 } from "date-fns";
 import { useCalendarCtx } from "../../../ctx/calendarCtx";
 
-export default function DaysDisplay(): JSX.Element {
+export default function MonthDisplay(): JSX.Element {
   const { currentDate, setCurrentDate, setSingleDayDisplay, userEvents } =
     useCalendarCtx();
   const startDate: Date = startOfMonth(currentDate);
