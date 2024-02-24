@@ -52,7 +52,7 @@ export default function EventForm(): JSX.Element {
     const newEvent: Event = {
       id: currentEvent?.id || uid(32),
       starting: allDay ? startOfDay(dateStart!) : dateStart!,
-      ending: allDay ? startOfDay(dateEnd!) : dateEnd!,
+      ending: allDay ? add(startOfDay(dateEnd!), { hours: 1 }) : dateEnd!,
       allDay: allDay,
       title: eventTitle.current?.value ? eventTitle.current.value : "New Event",
     };
